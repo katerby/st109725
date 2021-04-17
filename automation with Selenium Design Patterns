@@ -1,1 +1,156 @@
+import common.LoanAppHelper;
+import dataprovider.customerdataprovider;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.annotations.Test;
+import pageobject.AddCustomerPage;
+import pageobject.CustomersPage;
+import pageobject.HomePage;
 
+public class customer {
+
+ @Test (dataProvider = "CreateCustomer", dataProviderClass = customerdataprovider.class)
+ //@Parameters(value = {"branch", "branchAdmin","branchPassword","FirstName", "LastName"})
+ public void Addcustomer(String branch,String branchAdmin,String branchPassword,String Firstname,String Lastname,String warning) {
+  System.setProperty("webdriver.chrome.driver", "C:\\Users\\16477\\AppData\\Local\\Temp\\Temp1_chromedriver_win32.zip\\chromedriver.exe");
+// Create a new instance of the firefox driver
+  WebDriver driver = new ChromeDriver();
+  int numberOFMilliseconds = 5000;
+  //Create Objects required for this Test
+  // Create instance of class Login to use its LMSLogin method in our Add User scenario
+  Login login = new Login();
+  HomePage homePage= new HomePage(driver);
+  CustomersPage customersPage= new CustomersPage(driver);
+  AddCustomerPage addCustomerPage= new AddCustomerPage(driver);
+  LoanAppHelper loanAppHelper =new LoanAppHelper();
+
+  // Login to LMS - using LMSLogin method of class Login and passing 'driver' argument to the method to re-use Firefox browser already opened
+  login.LMSlogin(driver, branch, branchAdmin, branchPassword);
+
+  // try to sleep (wait) for 5 sec (using exception handler)
+  loanAppHelper.sleep(numberOFMilliseconds);
+
+  // Find button and click 'Customers' by its id
+  homePage.clickCustomersButton (driver);
+
+  // try to sleep (wait) for 5 sec (using exception handler)
+  loanAppHelper.sleep(numberOFMilliseconds);
+  // Find and click  button 'Actions'
+  customersPage.clickActionsButton(driver);
+  // try to sleep (wait) for 5 sec (using exception handler)
+  loanAppHelper.sleep(numberOFMilliseconds);
+  // Find menu item 'Add Customer' by link text
+  customersPage.clickAddCustomer(driver);
+
+  // Set First Name
+  addCustomerPage.setFirstName(driver,Firstname);
+
+  // Set Last Name
+  addCustomerPage.setLastName(driver, Lastname);
+
+
+// Find button 'Save' by its xpath
+  addCustomerPage. clickSaveButton(driver);
+  // try to sleep (wait) for 5 sec (using exception handler)
+  loanAppHelper.sleep(numberOFMilliseconds);
+
+  if (warning != "") {
+   loanAppHelper.doesTextExistonPage(warning, driver);
+
+   // find button and click OK
+   addCustomerPage. clickOKButton(driver);
+
+   // Find button and click 'Cancel'
+   addCustomerPage. clickCancelButton(driver);;
+
+
+
+  } else {
+   // verify the results by parsing html page and making sure it contain just created username
+   loanAppHelper.DoesTextExistOnPage(Lastname,driver);
+  }
+   // Find button and click 'Logout'
+   customersPage.clickLogoutButton(driver);
+
+  //click button Logout
+
+// try to sleep (wait) for 5 sec (using exception handler)
+  loanAppHelper.sleep(numberOFMilliseconds);
+// close the browser
+  driver.close();
+  }
+
+ @Test (dataProvider = "CreateCustomer", dataProviderClass = customerdataprovider.class)
+ //@Parameters(value = {"branch", "branchAdmin","branchPassword","FirstName", "LastName"})
+ public void Addcustomer1(String branch,String branchAdmin,String branchPassword,String Firstname,String Lastname,String warning) {
+  System.setProperty("webdriver.chrome.driver", "C:\\Users\\16477\\AppData\\Local\\Temp\\Temp1_chromedriver_win32.zip\\chromedriver.exe");
+// Create a new instance of the firefox driver
+  WebDriver driver = new ChromeDriver();
+  int numberOFMilliseconds = 5000;
+  //Create Objects required for this Test
+  // Create instance of class Login to use its LMSLogin method in our Add User scenario
+  Login login = new Login();
+  HomePage homePage= new HomePage(driver);
+  CustomersPage customersPage= new CustomersPage(driver);
+  AddCustomerPage addCustomerPage= new AddCustomerPage(driver);
+  LoanAppHelper loanAppHelper =new LoanAppHelper();
+
+  // Login to LMS - using LMSLogin method of class Login and passing 'driver' argument to the method to re-use Firefox browser already opened
+  login.LMSlogin(driver, branch, branchAdmin, branchPassword);
+
+  // try to sleep (wait) for 5 sec (using exception handler)
+  loanAppHelper.sleep(numberOFMilliseconds);
+
+  // Find button and click 'Customers' by its id
+  loanAppHelper.clickElementByID (driver,"ext-gen192");
+
+  // try to sleep (wait) for 5 sec (using exception handler)
+  loanAppHelper.sleep(numberOFMilliseconds);
+  // Find and click  button 'Actions'
+  loanAppHelper.clickElementByXPath(driver,"//*[@id=\"ext-gen359\"]");
+  // try to sleep (wait) for 5 sec (using exception handler)
+  loanAppHelper.sleep(numberOFMilliseconds);
+  // Find menu item 'Add Customer' by link text
+  loanAppHelper.clickElementByLinkName(driver, "Add Customer");
+
+  // Set First Name
+  loanAppHelper.setText (driver, "FirstName", Firstname);
+
+  // Set Last Name
+  loanAppHelper.setText (driver, "LastName", Lastname);
+
+
+// Find and click button 'Save' by its xpath
+  loanAppHelper.clickElementByXPath(driver,"//*[@id=\"ext-gen628\"]");
+  // try to sleep (wait) for 5 sec (using exception handler)
+  loanAppHelper.sleep(numberOFMilliseconds);
+
+  if (warning != "") {
+   loanAppHelper.doesTextExistonPage(warning, driver);
+
+   // find button and click OK
+  loanAppHelper.clickElementByID(driver,"ext-gen827");
+
+   // Find button and click 'Cancel'
+   loanAppHelper.clickElementByXPath(driver,"//*[@id=\"ext-gen636\"]");
+
+
+  } else {
+   // verify the results by parsing html page and making sure it contain just created username
+   loanAppHelper.DoesTextExistOnPage(Lastname,driver);
+  }
+  // Find button and click 'Logout'
+  loanAppHelper.clickElementByXPath(driver, "//div[5]/div/div/div/div[2]/div[1]/div/div/div[1]/div/table/tbody/tr/td[5]/table/tbody/tr/td[2]/em/button");
+
+  //click button Logout
+
+// try to sleep (wait) for 5 sec (using exception handler)
+  loanAppHelper.sleep(numberOFMilliseconds);
+// close the browser
+  driver.close();
+ }
+
+
+
+
+}
