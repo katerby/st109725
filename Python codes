@@ -1,0 +1,82 @@
+"""
+File: final_project.py
+-------------------------
+# That is quiz-test to identify how coronovirus isolation impacted our personality."""
+
+
+import random
+
+def main():
+#created class QA that consists of questions and correctAnswer and otherAnswer. I use concept of correctAnswer to
+#be able to count answears with "positive" situational meaning.
+#the function _init_ is used in order to create new QA object and pass corresponding attribute.
+    class QA:
+        def __init__(self, question, correctAnswer, otherAnswers):
+            self.question = question
+            self.corrAnsw = correctAnswer
+            self.otherAnsw = otherAnswers
+#All questions and answears are in the qaList
+    qaList = [QA("Have you stayed at home during coronavirus pandemic?", "Yes", ["No"]),
+              QA("Did you continue working during coronavirus pandemic?", "Yes", ["No"]),
+              QA("Did you continue to workout?", "Yes", ["No"]),
+              QA("Did you feel blue/depressed during pandemic?", "No", ["Yes"]),
+              QA("Did you stay connected with your friends/relatives?", "Yes",["No"]),
+              QA("Have you drank more alcohol than usual?","No",["Yes"]),
+              QA("Have you taken online course and completed it?","Yes",["No"]),
+              QA("Have you read any single book during that time?","Yes",["No"]),
+              QA("Have you cooked more homemade meals?","Yes",["No"])]
+
+#variable corrCount is created to count CorrAnswers.
+    corrCount = 0
+    random.shuffle(qaList)
+#random.shuffle allows to show questions in random order.
+#for loop is used in order to get each qaItem from qaList.
+    for qaItem in qaList:
+
+        print(qaItem.question)
+        print("Possible answers are:")
+        possible = qaItem.otherAnsw + [
+            qaItem.corrAnsw]  # square brackets turn correct answer into list for concatenating with other list
+        random.shuffle(possible)
+        count = 0  # list indexes start at 0 in python
+        while count < len(possible):
+            print(str(count + 1) + ": " + possible[count])
+            count += 1
+        print("Please enter the number of your answer:")
+        userAnsw = input()
+        #In case user instead of 1or2 put any other number or digit. We need to put that condition in while loop.
+        while not userAnsw.isdigit():
+            print("That was not a number. Please enter the number of your answer:")
+            userAnsw = input()
+        userAnsw = int(userAnsw)
+        while not (0 < int(userAnsw) <= len(possible)):
+            print("That number doesn't correspond to any answer. Please enter the number of your answer:")
+            userAnsw = input()
+        userAnsw=int(userAnsw)
+        if possible[userAnsw-1] == qaItem.corrAnsw:
+            corrCount += 1
+        if corrCount > 5:
+            print("You are a warrior of covid-19!")
+        if corrCount>=2 and corrCount<5:
+              print("You did really well during covid-19!")
+
+    print("You answered " + str(corrCount) + " of " + str(len(qaList)) + " questions positively.")
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+if __name__ == '__main__':
+    main()
