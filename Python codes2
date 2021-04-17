@@ -1,0 +1,39 @@
+"""
+File: khansole_academy.py
+-------------------------
+Add your comments here.
+"""
+
+import random
+
+RANDOM_NUM=99
+def main():
+    guess_count=0
+    while guess_count<3:
+       x= random.randint(10,RANDOM_NUM)
+       x1= random.randint(10,RANDOM_NUM)
+       print("What is"+" "+(str(x))+"+"+(str(x1))+"?")
+       y=x+x1
+       (answer)= input("Your answer:")
+       if (answer== (str(y))):
+         guess_count+=1
+         if guess_count==1:
+             print("Correct! You have gotten 1 correct in a row.")
+         if guess_count==2:
+             print("Correct! You have gotten 2 correct in a row.")
+         if guess_count==3:
+             print("Correct! You have gotten 3 correct in a row.")
+       elif (answer!= (str(y))):
+        print("Incorrect."+""+"The expected answer is "+(str(y)))
+        guess_count=0
+    else:
+        print("Congratulations! You mastered addition.")
+
+
+
+
+
+# This provided line is required at the end of a Python file
+# to call the main() function.
+if __name__ == '__main__':
+    main()
